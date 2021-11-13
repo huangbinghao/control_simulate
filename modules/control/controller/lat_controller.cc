@@ -743,7 +743,7 @@ void LatController::UpdateMatrixCompound() {
 
 double LatController::ComputeFeedForward(double ref_curvature) const {
   const double kv =
-      (0910-question) - (0910-question);
+      (lr_*mass_/(2*cf_*wheelbase_)) - (lf_*mass_/(2*cr_*wheelbase));
 
   // Calculate the feedforward term of the lateral controller; then change it
   // from rad to %
@@ -755,10 +755,10 @@ double LatController::ComputeFeedForward(double ref_curvature) const {
                                   steer_single_direction_max_degree_ * 100;
   } else {
     steer_angle_feedforwardterm =
-        ((0910-question) + (0910-question) -
-         (0910-question) *
-             ((0910-question) -
-              (0910-question)) *
+        ((wheelbase_*ref_curvature) + (kv*v*v*ref_curvature) -
+         (matrix_k(0,2)) *
+             ((ref_curvature*lr_) -
+              (ref_curvature*lf_*mass_*v*v/2.0/cr_/wheelbase_)) *
         180 / M_PI * steer_ratio_ / steer_single_direction_max_degree_ * 100;
   }
 
